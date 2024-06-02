@@ -1,11 +1,12 @@
-# 🚀 URL Shorten Backend Service
+# 🚀 URL Shortener Backend Service
 
-Welcome to the Short URL Service! This sleek and efficient application empowers you to shorten long URLs, making them easier to share and manage. Built with love using the latest web technologies, including [Express](https://expressjs.com/), [MongoDB](https://www.mongodb.com/), [TypeScript](https://www.typescriptlang.org/) it's designed to streamline your URL management experience.
+This component serves as the backend of a MERN app. Its primary function is to take long, unattractive URLs and transform them into short, memorable links. Additionally, it provides tracking capabilities, allowing users to monitor the number of times each short URL is visited. Built with love using the latest web technologies, including [MongoDB](https://www.mongodb.com/), [TypeScript](https://www.typescriptlang.org/), it's designed to streamline your URL management experience.
 
 ## ✨ Features
 
 - **Shorten URLs**: Transform lengthy URLs into concise, easy-to-share links.
 - **Retrieve URLs**: Effortlessly access and manage your shortened URLs.
+- **View Clicks**: Monitor the number of times each short URL is visited.
 - **Delete URLs**: Seamlessly remove unnecessary short URLs.
 - **Secure**: Protect your data with robust security measures.
 - **Analytics**: Track the performance of your short URLs with detailed analytics. (Coming Soon)
