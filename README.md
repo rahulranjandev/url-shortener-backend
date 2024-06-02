@@ -15,7 +15,7 @@ Welcome to the Short URL Service! This sleek and efficient application empowers 
 1. **Clone the Repository**:
 
     ```bash
-    git clone https://github.com/your-username/short-url-service.git
+    git clone https://github.com/rahulranjan937/URL-Shorten-Backend.git
     ```
 
 2. **Install Dependencies**:
@@ -27,14 +27,13 @@ Welcome to the Short URL Service! This sleek and efficient application empowers 
 
 3. **Set Up Environment Variables**:
 
-   Create a `.env` file in the root directory and add the following variables:
+    Copy the `.env.example` file to `.env`:
 
-    ```plaintext
-    PORT=3333
-    MONGODB_URI=mongodb://localhost:27017/short_url_db
+    ```bash
+    cp .env.example .env
     ```
 
-    Customize the `PORT` and `MONGODB_URI` according to your preferences and MongoDB setup.
+    Customize the `PORT` , `MONGO_URI` and other environment variables as needed.
 
 4. **Build the Project**:
 
@@ -60,7 +59,7 @@ To create a short URL, send a POST request to `/api/url/` with the following JSO
 
 ```json
 {
-    "longUrl": "https://example.com/very-long-url-with-lots-of-characters"
+    "longUrl": "https://github.com/rahulranjan937/URL-Shorten-Backend"
 }
 ```
 
