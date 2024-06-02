@@ -1,6 +1,6 @@
 # 🚀 URL Shortener Backend Service
 
-This component serves as the backend of a MERN app. Its primary function is to take long, unattractive URLs and transform them into short, memorable links. Additionally, it provides tracking capabilities, allowing users to monitor the number of times each short URL is visited. Built with love using the latest web technologies, including [MongoDB](https://www.mongodb.com/), [TypeScript](https://www.typescriptlang.org/), it's designed to streamline your URL management experience.
+This component serves as the backend of a MERN app. Its primary function is to take long, unattractive URLs and transform them into short, memorable links. Additionally, it provides tracking capabilities, allowing users to monitor the number of times each short URL is visited. Built with love using the latest web technologies, including [Express](https://expressjs.com/), [MongoDB](https://www.mongodb.com/), [TypeScript](https://www.typescriptlang.org/), it's designed to streamline your URL management experience.
 
 ## ✨ Features
 
