@@ -16,13 +16,13 @@ This component serves as the backend of a MERN app. Its primary function is to t
 1. **Clone the Repository**:
 
     ```bash
-    git clone https://github.com/rahulranjan937/URL-Shorten-Backend.git
+    git clone https://github.com/rahulranjan937/url-shortener-backend.git
     ```
 
 2. **Install Dependencies**:
 
     ```bash
-    cd short-url-service
+    cd url-shortener-backend
     npm install
     ```
 
