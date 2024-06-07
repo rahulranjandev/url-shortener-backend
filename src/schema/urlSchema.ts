@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const urlSchema = z.object({
   body: z.object({
-    longUrl: z.string({ required_error: 'Long URL is required' }).url({ message: 'Invalid URL' }),
+    originalUrl: z.string({ required_error: 'Long URL is required' }).url({ message: 'Invalid URL' }),
   }),
 });
 

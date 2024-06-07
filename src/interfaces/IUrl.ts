@@ -38,7 +38,7 @@ export class UrlService {
    * @description Create Short URL
    * @Access User access - Protected
    */
-  public async createShortUrl(userId: string, url: { longUrl: string }): Promise<IUrl> {
+  public async createShortUrl(userId: string, url: { originalUrl: string }): Promise<IUrl> {
     return await Url.create({ userId, ...url });
   }
 

@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
+import { UpdateUserInput } from '@/schema/userSchema';
 import { UserService } from '@interfaces/IUser';
 import { SendEmail } from '@utils/sendEmail';
 
@@ -26,42 +27,50 @@ export class UserController {
     }
   };
 
-  public updateUser = async (req: Request, res: Response, next: NextFunction) => {
+  public updateUser = async (req: Request<{}, UpdateUserInput['body']>, res: Response, next: NextFunction) => {
     try {
       const id = res.locals.user.id;
-      const payload = {
-        name: req.body.name,
-        email: req.body.email,
-        avatar: req.body.avatar,
+
+      // Initialize payload with only verified field
+      const payload: Partial<UpdateUserInput['body']> & { verified: boolean } = {
         verified: true,
       };
 
-      // If the user is updating their email, check if the email is already taken
-      if (payload.email) {
-        const user = await this.userService.getUserByQuery({ email: payload.email });
+      if (req.body.email) {
+        const user = await this.userService.getUserByQuery({ email: req.body.email });
 
         if (user) {
           return res.status(400).json({
             message: 'Email already taken',
           });
         }
-        // If user is updating their email, verify their email address again
+
+        // Set the email in the payload
+        payload.email = req.body.email;
 
         // Send verification email
-        await this.sendEmail.sendVerificationEmail(id, payload.email);
+        await this.sendEmail.sendVerificationEmail(id, req.body.email);
 
-        // Update user's email_verified field to false to indicate that the user needs to verify their email address
+        // Update user's email_verified field to false
         payload.verified = false;
 
+        // Update user's email and verified status in the database
         await this.userService.findAndUpdateUser(
           { _id: id },
-          {
-            $set: { email: payload.email, verified: payload.verified },
-          },
+          { $set: { email: req.body.email, verified: payload.verified } },
           { new: true }
         );
       }
 
+      if (req.body.avatar) {
+        // Set the avatar in the payload
+        payload.avatar = req.body.avatar;
+
+        // Update user's avatar in the database
+        await this.userService.findAndUpdateUser({ _id: id }, { $set: { avatar: req.body.avatar } }, { new: true });
+      }
+
+      // Return only the fields that were updated
       return res.status(200).json({
         data: payload,
       });

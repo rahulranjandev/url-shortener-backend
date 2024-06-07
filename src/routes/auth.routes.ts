@@ -5,10 +5,10 @@ const router = Router();
 import AuthMiddleware from '@middlewares/authMiddleware';
 
 import { AuthController } from '@controllers/authController';
+import { PasswdController } from '@/controllers/passwdController';
 
 import validateSchema from '@/middlewares/validateSchema';
-import { loginUserSchema, registerUserSchema, forgetPasswordSchema, resetPasswordSchema } from '@schema/userSchema';
-import { PasswdController } from '@/controllers/passwdController';
+import { loginUserSchema, registerUserSchema, forgetPasswordSchema } from '@schema/userSchema';
 
 const authMiddleware = new AuthMiddleware();
 
@@ -40,14 +40,6 @@ router.post('/login', validateSchema(loginUserSchema), Auth.login);
 router.post('/forgotpassword', validateSchema(forgetPasswordSchema), Password.forgotPassword);
 
 /**
- * @alias   PUT /api/v1/auth/resetpassword/:resettoken
- * @desc    Reset password
- * @access  Public
- * @body    password (new password) and resettoken
- */
-router.post('/resetpassword/:resttoken', Password.resetPassword);
-
-/**
  * @alias   GET /api/v1/auth/changepassword
  * @desc    Change password
  * @access  Private
@@ -61,13 +53,5 @@ router.get('/changepassword', authMiddleware.isAuthenticated, authMiddleware.req
  * @access  Private
  */
 router.post('/logout', authMiddleware.isAuthenticated, authMiddleware.requireUser, Auth.logout);
-
-/**
- * @alias   GET /confirm/:token
- * @desc    Confirm email
- * @access  Public
- * @body    token
- */
-router.get('/confirm/:token', Auth.confirmEmail);
 
 export default router;

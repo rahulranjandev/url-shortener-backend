@@ -8,10 +8,10 @@ export class UrlController {
 
   public createShortUrl = async (req: Request<{}, UrlInput['body']>, res: Response, next: NextFunction) => {
     try {
-      const { longUrl } = req.body;
+      const { originalUrl } = req.body;
       const userId = res.locals.user.id;
 
-      const url = await this.urlService.createShortUrl(userId, { longUrl });
+      const url = await this.urlService.createShortUrl(userId, { originalUrl });
 
       return res.status(201).json({
         data: url,
@@ -44,12 +44,12 @@ export class UrlController {
   ) => {
     try {
       const urlCode = req.params.urlCode;
-      const { longUrl } = req.body;
+      const { originalUrl } = req.body;
 
       const url = await this.urlService.findAndUpdateUrl(
         { urlCode },
         {
-          $set: { longUrl },
+          $set: { originalUrl },
         },
         { new: true }
       );

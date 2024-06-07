@@ -6,6 +6,8 @@ import AuthMiddleware from '@middlewares/authMiddleware';
 import OnlyAdminAccess from '@middlewares/onlyAdmimAccess';
 
 import { UserController } from '@controllers/userController';
+import validateSchema from '@/middlewares/validateSchema';
+import { updateUserSchema } from '@schema/userSchema';
 
 const authMiddleware = new AuthMiddleware();
 const onlyAdminAccess = new OnlyAdminAccess();
@@ -34,6 +36,7 @@ router.put(
   '/',
   authMiddleware.isAuthenticated,
   authMiddleware.requireUser,
+  validateSchema(updateUserSchema),
 
   User.updateUser
 );

@@ -12,7 +12,7 @@ export class RedirectController {
       const url = await this.urlService.redirectUrl(urlCode);
 
       if (url) {
-        return res.status(302).redirect(url.longUrl);
+        return res.status(302).redirect(url.originalUrl);
       }
 
       return res.status(404).json({

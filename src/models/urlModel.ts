@@ -4,7 +4,7 @@ import generateUniqueUrlCode from '@utils/slugify';
 
 interface IUrl extends Document {
   userId: mongoose.Types.ObjectId;
-  longUrl: string;
+  originalUrl: string;
   shortUrl?: string;
   urlCode?: string;
   clickCount?: number;
@@ -17,7 +17,7 @@ const urlSchema = new mongoose.Schema<IUrl>(
       ref: 'User',
       required: true,
     },
-    longUrl: {
+    originalUrl: {
       type: String,
       required: [true, 'Please provide a long URL'],
     },
