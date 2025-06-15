@@ -13,12 +13,12 @@ export class UserController {
       const user = await this.userService.getUserById(res.locals.user.id);
 
       if (!user) {
-        return res.status(400).json({
+        return void res.status(400).json({
           message: 'User does not exist',
         });
       }
 
-      return res.status(200).json({
+      return void res.status(200).json({
         data: user,
       });
     } catch (err: any) {
@@ -40,7 +40,7 @@ export class UserController {
         const user = await this.userService.getUserByQuery({ email: req.body.email });
 
         if (user) {
-          return res.status(400).json({
+          return void res.status(400).json({
             message: 'Email already taken',
           });
         }
@@ -70,8 +70,8 @@ export class UserController {
         await this.userService.findAndUpdateUser({ _id: id }, { $set: { avatar: req.body.avatar } }, { new: true });
       }
 
-      // Return only the fields that were updated
-      return res.status(200).json({
+      // return void only the fields that were updated
+      return void res.status(200).json({
         data: payload,
       });
     } catch (err: any) {
@@ -87,7 +87,7 @@ export class UserController {
       const user = await this.userService.deleteUser(id);
 
       if (!user) {
-        return res.status(400).json({
+        return void res.status(400).json({
           message: 'User does not exist',
         });
       }

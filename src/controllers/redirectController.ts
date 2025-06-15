@@ -15,9 +15,8 @@ export class RedirectController {
         return res.status(302).redirect(url.originalUrl);
       }
 
-      return res.status(404).json({
-        message: 'URL not found',
-      });
+      res.status(404).json({ message: 'URL not found' });
+      return;
     } catch (err: any) {
       res.status(500).send('Internal Server Error');
       console.error(err.message);

@@ -13,7 +13,7 @@ export class UrlController {
 
       const url = await this.urlService.createShortUrl(userId, { originalUrl });
 
-      return res.status(201).json({
+      return void res.status(201).json({
         data: url,
       });
     } catch (err: any) {
@@ -28,7 +28,7 @@ export class UrlController {
 
       const urls = await this.urlService.getUrlsByQuery({ userId });
 
-      return res.status(200).json({
+      return void res.status(200).json({
         data: urls,
       });
     } catch (err: any) {
@@ -55,12 +55,12 @@ export class UrlController {
       );
 
       if (!url) {
-        return res.status(404).json({
+        return void res.status(404).json({
           message: 'URL not found',
         });
       }
 
-      return res.status(200).json({
+      return void res.status(200).json({
         data: url,
       });
     } catch (err: any) {
@@ -76,12 +76,12 @@ export class UrlController {
       const url = await this.urlService.deleteUrl(urlCode);
 
       if (!url) {
-        return res.status(404).json({
+        return void res.status(404).json({
           message: 'URL not found',
         });
       }
 
-      return res.status(200).json({
+      return void res.status(200).json({
         message: 'URL deleted successfully',
       });
     } catch (err: any) {

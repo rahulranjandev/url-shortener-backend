@@ -9,9 +9,9 @@ const validateSchema = (schema: AnyZodObject) => async (req: Request, res: Respo
       params: req.params,
     });
 
-    return next();
+    return void next();
   } catch (err: any) {
-    return res.status(400).json({
+    return void res.status(400).json({
       message: err.errors,
     });
   }

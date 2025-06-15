@@ -10,15 +10,13 @@ export class PasswdController {
   private sendEmail = new SendEmail();
 
   public forgotPassword = async (req: Request<{}, ForgetPasswordInput['body']>, res: Response, next: NextFunction) => {
-    const payload = {
-      email: req.body.email,
-    };
+    const payload = { email: req.body.email };
 
     try {
       const user = await this.userService.getUserByQuery({ email: payload.email });
 
       if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+        return void res.status(404).json({ message: 'User not found' });
       }
 
       // To send email using Mailgun API
@@ -33,23 +31,22 @@ export class PasswdController {
 
   public resetPassword = async (req: Request, res: Response, next: NextFunction) => {
     const resttoken = req.params.resttoken;
-    const payload = {
-      password: req.body.password,
-    };
+    const payload = { password: req.body.password };
 
     if (!resttoken) {
-      return res.status(401).json({ message: 'Token is required' });
+      return void res.status(401).json({ message: 'Token is required' });
     }
 
     if (!payload.password) {
-      return res.status(400).json({ message: 'Password is required' });
+      return void res.status(400).json({ message: 'Password is required' });
     }
 
     try {
       const user = await this.userService.getUserByToken(resttoken);
 
       if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+        res.status(404).json({ message: 'User not found' });
+        return;
       }
 
       const salt = await bcrypt.genSalt(10);
@@ -59,9 +56,8 @@ export class PasswdController {
 
       await this.userService.resetPassword(newChangedPassword, newToken);
 
-      res.status(200).json({
-        message: 'Password reset successful',
-      });
+      res.status(200).json({ message: 'Password reset successful' });
+      return;
     } catch (err: any) {
       res.status(500).send('Internal Server Error');
       console.error(err.message);
@@ -76,13 +72,13 @@ export class PasswdController {
       const user = await this.userService.getUserByQuery({ _id: id });
 
       if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+        return void res.status(404).json({ message: 'User not found' });
       }
 
       const isMatch = await bcrypt.compare(oldPassword, user.password);
 
       if (!isMatch) {
-        return res.status(401).json({ message: 'Invalid credentials' });
+        return void res.status(401).json({ message: 'Invalid credentials' });
       }
 
       const salt = await bcrypt.genSalt(10);
@@ -91,7 +87,7 @@ export class PasswdController {
 
       await this.userService.findAndUpdateUser({ _id: id }, { password: newChangedPassword }, { new: true });
 
-      return res.status(200).json({ message: 'Password changed successfully' });
+      return void res.status(200).json({ message: 'Password changed successfully' });
     } catch (err: any) {
       res.status(500).send('Internal Server Error');
       console.error(err.message);
@@ -99,8 +95,6 @@ export class PasswdController {
   };
 
   public changePasswordWithToken = async (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).json({
-      message: 'Passwd API called, Under construction 🚧',
-    });
+    res.status(200).json({ message: 'Passwd API called, Under construction 🚧' });
   };
 }

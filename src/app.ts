@@ -16,7 +16,7 @@ const app = express();
 
 // Body Parser
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 // Cookie Parser
 app.use(cookieParser());
@@ -57,7 +57,7 @@ app.use(helmet());
 app.use('/', router);
 
 // UnKnown Routes
-app.all('*', (req: Request, res: Response, next: NextFunction) => {
+app.all('/*splat', (req: Request, res: Response, next: NextFunction) => {
   const err = new Error(`Route ${req.originalUrl} not found`) as any;
   err.statusCode = 404;
   next(err);
@@ -68,10 +68,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   err.status = err.status || 'error';
   err.statusCode = err.statusCode || 500;
 
-  res.status(err.statusCode).json({
-    status: err.status,
-    message: err.message,
-  });
+  res.status(err.statusCode).json({ status: err.status, message: err.message });
 });
 
 app.listen(PORT ?? 3333, () => {

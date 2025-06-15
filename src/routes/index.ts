@@ -21,10 +21,7 @@ const Redirect = new RedirectController();
  * @alias GET /health
  */
 const status = (req: Request, res: Response, next: NextFunction) => {
-  res.json({
-    status: 'success',
-    message: 'Server is Healthy 🚀',
-  });
+  res.json({ status: 'success', message: 'Server is Healthy 🚀' });
 };
 
 router.route('/health').get(status);
@@ -39,20 +36,12 @@ router.route('/health').get(status);
 router.route('/:urlCode').get(Redirect.redirect);
 
 /**
- * @alias   GET /confirm/:token
- * @desc    Confirm email
- * @access  Public
- * @body    token
- */
-router.get('/confirm/:token', Auth.confirmEmail);
-
-/**
  * @alias   GET /verify/:token
  * @desc    Verify email
  * @access  Public
  * @body    token
  */
-router.get('/verify/:token', Auth.confirmEmail);
+router.get('/verify/:token', Auth.verifyEmail);
 
 /**
  * @alias   PUT /api/v1/auth/resetpassword/:resettoken
@@ -60,7 +49,7 @@ router.get('/verify/:token', Auth.confirmEmail);
  * @access  Public
  * @body    password (new password) and resettoken
  */
-router.post('/resetpassword/:resttoken', Password.resetPassword);
+router.put('/resetpassword/:resttoken', Password.resetPassword);
 
 /**
  * @description Auth Routes - /api/auth - Public Routes

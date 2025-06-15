@@ -7,7 +7,7 @@ class OnlyAdminAccess {
       const user = res.locals.user;
 
       if (!allowedRoles.includes(user.admin)) {
-        return res.status(403).json({
+        return void res.status(403).json({
           message: 'You are not authorized, only admin can access',
         });
       }

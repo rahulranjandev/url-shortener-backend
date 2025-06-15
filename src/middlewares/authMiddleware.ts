@@ -18,7 +18,7 @@ class AuthMiddleware {
       }
 
       if (!access_token) {
-        return res.status(401).json({
+        return void res.status(401).json({
           message: 'You are not logged in! Please log in to get access.',
         });
       }
@@ -27,7 +27,7 @@ class AuthMiddleware {
       const decoded = verifyToken<{ user: any; id: string }>(access_token);
 
       if (!decoded) {
-        return res.status(401).json({
+        return void res.status(401).json({
           message: 'Invalid Credential. Please log in again!',
         });
       }
@@ -36,7 +36,7 @@ class AuthMiddleware {
       const currentUser = await this.userService.getUserByQuery({ _id: decoded.user.id });
 
       if (!currentUser) {
-        return res.status(401).json({
+        return void res.status(401).json({
           message: 'Credential is expired. Please log in again!',
         });
       }
@@ -56,7 +56,7 @@ class AuthMiddleware {
       const user = res.locals.user;
 
       if (!user) {
-        return res.status(401).json({
+        return void res.status(401).json({
           message: 'Invalid Credential. Please log in again!',
         });
       }
