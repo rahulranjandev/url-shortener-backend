@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  api-server:
+    build:
+      context: .
+    container_name: url-shortner-backend-api-server
+    image: url-shortner-backend-api-server
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks:
+      - app-network
+    ports:
+      - '3001:3333'
+
+networks:
+  app-network:
+    driver: bridge
