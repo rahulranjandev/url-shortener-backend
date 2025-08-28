@@ -2,13 +2,13 @@ import { z } from 'zod';
 
 export const urlSchema = z.object({
   body: z.object({
-    originalUrl: z.string({ required_error: 'Long URL is required' }).url({ message: 'Invalid URL' }),
+    originalUrl: z.string().min(1, { message: 'Long URL is required' }).url({ message: 'Invalid URL' }),
   }),
 });
 
 export const urlCodeSchema = z.object({
   params: z.object({
-    urlCode: z.string({ required_error: 'URL Code is required' }).min(5).max(10),
+    urlCode: z.string().min(5, { message: 'URL Code must be at least 5 characters' }).max(10),
   }),
 });
 
